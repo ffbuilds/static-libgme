@@ -5,9 +5,10 @@
 ARG LIBGME_URL="https://bitbucket.org/mpyne/game-music-emu.git"
 ARG LIBGME_COMMIT=6cd4bdb69be304f58c9253fb08b8362f541b3b4b
 
-# bump: alpine /FROM alpine:([\d.]+)/ docker:alpine|^3
-# bump: alpine link "Release notes" https://alpinelinux.org/posts/Alpine-$LATEST-released.html
-FROM alpine:3.16.2 AS base
+# Must be specified
+ARG ALPINE_VERSION
+
+FROM alpine:${ALPINE_VERSION} AS base
 
 FROM base AS download
 ARG LIBGME_URL
@@ -25,7 +26,7 @@ COPY --from=download /tmp/libgme/ /tmp/libgme/
 WORKDIR /tmp/libgme/build
 RUN \
   apk add --no-cache --virtual build \
-    build-base cmake && \
+    build-base cmake pkgconf && \
   cmake \
     -G"Unix Makefiles" \
     -DCMAKE_VERBOSE_MAKEFILE=ON \
@@ -34,6 +35,11 @@ RUN \
     -DENABLE_UBSAN=OFF \
     .. && \
   make -j$(nproc) install && \
+  # Sanity tests
+  pkg-config --exists --modversion --path libgme && \
+  ar -t /usr/local/lib/libgme.a && \
+  readelf -h /usr/local/lib/libgme.a && \
+  # Cleanup
   apk del build
 
 FROM scratch
