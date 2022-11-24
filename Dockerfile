@@ -1,3 +1,4 @@
+# syntax=docker/dockerfile:1
 
 # bump: libgme /LIBGME_COMMIT=([[:xdigit:]]+)/ gitrefs:https://bitbucket.org/mpyne/game-music-emu.git|re:#^refs/heads/master$#|@commit
 # bump: libgme after ./hashupdate Dockerfile LIBGME $LATEST
