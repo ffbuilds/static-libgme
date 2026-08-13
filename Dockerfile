@@ -1,10 +1,10 @@
 # syntax=docker/dockerfile:1
 
-# bump: libgme /LIBGME_COMMIT=([[:xdigit:]]+)/ gitrefs:https://bitbucket.org/mpyne/game-music-emu.git|re:#^refs/heads/master$#|@commit
+# bump: libgme /LIBGME_COMMIT=([[:xdigit:]]+)/ gitrefs:https://github.com/libgme/game-music-emu.git|re:#^refs/heads/master$#|@commit
 # bump: libgme after ./hashupdate Dockerfile LIBGME $LATEST
-# bump: libgme link "Source diff $CURRENT..$LATEST" https://bitbucket.org/mpyne/game-music-emu/branches/compare/$CURRENT..$LATEST
-ARG LIBGME_URL="https://bitbucket.org/mpyne/game-music-emu.git"
-ARG LIBGME_COMMIT=6cd4bdb69be304f58c9253fb08b8362f541b3b4b
+# bump: libgme link "Source diff $CURRENT..$LATEST" https://github.com/libgme/game-music-emu/compare/$CURRENT..$LATEST
+ARG LIBGME_URL="https://github.com/libgme/game-music-emu.git"
+ARG LIBGME_COMMIT=265d8b90c9b46bd3b892443dee4da585a0384858
 
 # Must be specified
 ARG ALPINE_VERSION
